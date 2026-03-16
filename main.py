@@ -595,7 +595,7 @@ if uploaded_file is not None:
         st.subheader("📋 数据明细列表 (仅展示前1000条)")
 
         # 准备展示数据
-        display_df = filtered_df.copy().head(1000)
+        display_df = filtered_df.copy().head(200)
         if '日期_dt' in display_df.columns:
             display_df['日期'] = display_df['日期_dt'].apply(lambda x: x.strftime('%Y-%m-%d'))
 
