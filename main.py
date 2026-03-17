@@ -335,17 +335,21 @@ if uploaded_file is not None:
             )
 
             # 最终合并：包含 titlePadding 逻辑
+            # --- 找到左侧折线图末尾的 chart_combined 配置 ---
             chart_combined = (lines + points + labels).properties(
                 height=400,
-                padding={'right': 150, 'top': 20}
+                # 👆 核心修改：将 bottom 从 50 压缩到 10 甚至更小
+                padding={'right': 50, 'top': 20, 'left': 50, 'bottom': 10}
             ).configure_legend(
-                orient='right',
-                offset=40,
+                orient='bottom',
+                direction='horizontal',
+                columns=7,
+                # 👆 核心修改：减小图例相对于图表底轴的偏移量
+                offset=5,  # 默认通常是 20，调小可以让图例往上“提”
                 labelFontSize=12,
                 symbolSize=100,
-                rowPadding=10,
-                titlePadding=20,  # 👈 图例标题下方的空行
-                padding=20
+                rowPadding=5,  # 压缩图例行与行之间的间距
+                titlePadding=5  # 压缩图例标题与图例项之间的间距
             ).configure_view(
                 strokeOpacity=0
             ).interactive()
@@ -508,15 +512,18 @@ if uploaded_file is not None:
             )
 
             # 5. 合并渲染 —— 已修复：图例右移，不重叠
+            # --- 找到右侧图表的 chart_combined 配置部分 ---
             chart_combined = (bars + text).properties(
-                height=450
+                height=450,
+                # 👆 增加右侧间距到 150
+                padding={'right': 150}
             ).configure_legend(
-                orient='right',
-                offset=100,  # 图例大幅右移，避免重叠
-                padding=40,  # 内边距加大
-                labelFontSize=12,
-                symbolSize=100,
-                titlePadding=20
+                orient='bottom',
+                direction='horizontal',
+                # 👆 将 offset 调大到 140
+                columns=4,  # 每行显示4个，防止太长
+                offset=20,
+                labelFontSize=12
             ).configure_view(
                 strokeOpacity=0
             ).interactive()
